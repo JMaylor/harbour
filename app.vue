@@ -6,7 +6,7 @@ const switchLocalePath = useSwitchLocalePath()
 </script>
 
 <template>
-  <ul>
+  <ul class="absolute right-0 top-0">
     <li
       v-for="l in (locales as LocaleObject[])"
       :key="l.code"

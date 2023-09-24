@@ -3,16 +3,20 @@ export default defineI18nConfig(() => ({
   fallbackLocale: 'en',
   messages: {
     en: {
+      auth: {
+        sign_up: 'Sign up',
+        sign_out: 'Sign out',
+        log_in: 'Log in',
+      },
       welcome: 'Welcome',
-      login: 'Log in',
-      authorization_layout: 'Authorization layout',
-      default_layout: 'Default layout',
     },
     fr: {
+      auth: {
+        sign_up: 'S\'inscrire',
+        sign_out: 'Se déconnecter',
+        log_in: 'Se connecter',
+      },
       welcome: 'Bienvenue',
-      login: 'Se connecter',
-      default_layout: 'Disposition par défaut',
-      authorization_layout: 'Disposition des autorisations',
     },
   },
 }))

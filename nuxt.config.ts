@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     'nuxt-icon', // https://github.com/nuxt-modules/icon
     '@nuxtjs/eslint-module', // https://nuxt.com/modules/eslint
     '@nuxtjs/i18n', // https://v8.i18n.nuxtjs.org/
+    '@nuxtjs/supabase', // https://supabase.nuxtjs.org/
   ],
   i18n: {
     vueI18n: './i18n.config.ts',
@@ -38,4 +39,5 @@ export default defineNuxtConfig({
       redirectOn: 'root', // recommended
     },
   },
+  supabase: { redirect: false },
 })

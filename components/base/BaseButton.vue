@@ -6,9 +6,10 @@ withDefaults(defineProps<{
 
 <template>
   <button
+    class="rounded px-4 py-2 text-white"
     :class="{
-      'bg-red-500': color === 'red',
-      'bg-blue-500': color === 'blue',
+      'bg-red-700 hover:bg-red-500': color === 'red',
+      'bg-sky-700 hover:bg-sky-500': color === 'blue',
     }"
   >
     <slot />

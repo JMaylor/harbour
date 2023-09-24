@@ -40,4 +40,5 @@ export default defineNuxtConfig({
     },
   },
   supabase: { redirect: false },
+  vue: { defineModel: true },
 })

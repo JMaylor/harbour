@@ -1,3 +1,12 @@
 <template>
-  <NuxtPage />
+  <div class="flex h-full w-full items-center justify-center">
+    <div class="max-w-md grow rounded border p-4">
+      <img
+        src="/logo.svg"
+        class="mx-auto my-4 h-12"
+      >
+
+      <NuxtPage />
+    </div>
+  </div>
 </template>

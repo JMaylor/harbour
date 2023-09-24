@@ -32,24 +32,37 @@ watch(user, () => {
 </script>
 
 <template>
-  <h1>{{ $t('auth.sign_up') }}</h1>
-  <form @submit.prevent="onSignUp">
-    <input
+  <PrimaryHeading class="text-center">
+    {{ $t('auth.sign_up') }}
+  </PrimaryHeading>
+  <form
+    class="flex flex-col gap-4 p-4"
+    @submit.prevent="onSignUp"
+  >
+    <BaseInput
+      id="email"
       v-model="signUpState.email"
       required
       type="email"
-      class="border"
-      placeholder="email"
+      :label="$t('auth.email')"
       autocomplete="email"
-    >
-    <input
+    />
+    <BaseInput
+      id="password"
       v-model="signUpState.password"
       required
       type="password"
-      class="border"
-      placeholder="password"
+      :label="$t('auth.password')"
       autocomplete="new-password"
+    />
+    <BaseButton type="submit">
+      {{ $t('auth.sign_up') }}
+    </BaseButton>
+    <NuxtLink
+      class="mx-auto text-sm underline"
+      :to="useNuxtApp().$localePath('/login')"
     >
-    <button>{{ $t('auth.sign_up') }}</button>
+      {{ $t('auth.already_got_account') }}
+    </NuxtLink>
   </form>
 </template>

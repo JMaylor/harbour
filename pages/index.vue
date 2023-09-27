@@ -8,9 +8,6 @@ async function onSignOut() {
 </script>
 
 <template>
-  <h1>
-    {{ $t('welcome') }}
-  </h1>
   <button @click="onSignOut">
     Sign out
   </button>

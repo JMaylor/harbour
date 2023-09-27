@@ -13,6 +13,7 @@ export default defineI18nConfig(() => ({
         no_account: 'No account yet? Sign up here.',
       },
       welcome: 'Welcome',
+      switch_language: 'Switch Language',
     },
     fr: {
       auth: {
@@ -25,6 +26,7 @@ export default defineI18nConfig(() => ({
         no_account: 'Pas encore de compte? Inscrivez-vous ici.',
       },
       welcome: 'Bienvenue',
+      switch_language: 'Changer de langue',
     },
   },
 }))

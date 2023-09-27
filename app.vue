@@ -11,11 +11,12 @@ const localeToSwitchTo = computed(() => (locales.value as LocaleObject[]).find(l
     v-if="localeToSwitchTo"
     class="absolute right-1 top-0"
     :to="switchLocalePath(localeToSwitchTo.code)"
+    :title="$t('switch_language')"
   >
     <img
       class="h-10"
       :src="`/flags/${locale}.svg`"
-      :alt="$t('switch_language')"
+      :alt="`Flag - ${locale}`"
     >
   </NuxtLink>
 

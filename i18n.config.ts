@@ -18,6 +18,8 @@ export default defineI18nConfig(() => ({
       create_new_room: 'Create a new room',
       loading_rooms: 'Loading rooms...',
       rooms_available: 'Rooms available',
+      room_name: 'Room name',
+      create: 'Create',
     },
     fr: {
       auth: {
@@ -35,6 +37,8 @@ export default defineI18nConfig(() => ({
       create_new_room: 'Créer une nouvelle salle',
       loading_rooms: 'Chargement des salles...',
       rooms_available: 'Salles disponibles',
+      room_name: 'Nom de la salle',
+      create: 'Créer',
     },
   },
 }))

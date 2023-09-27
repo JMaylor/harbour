@@ -14,6 +14,10 @@ export default defineI18nConfig(() => ({
       },
       welcome: 'Welcome',
       switch_language: 'Switch Language',
+      file_rooms: 'File Rooms',
+      create_new_room: 'Create a new room',
+      loading_rooms: 'Loading rooms...',
+      rooms_available: 'Rooms available',
     },
     fr: {
       auth: {
@@ -27,6 +31,10 @@ export default defineI18nConfig(() => ({
       },
       welcome: 'Bienvenue',
       switch_language: 'Changer de langue',
+      file_rooms: 'Salles de fichiers',
+      create_new_room: 'Créer une nouvelle salle',
+      loading_rooms: 'Chargement des salles...',
+      rooms_available: 'Salles disponibles',
     },
   },
 }))

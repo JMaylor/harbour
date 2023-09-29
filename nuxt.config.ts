@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module', // https://nuxt.com/modules/eslint
     '@nuxtjs/i18n', // https://v8.i18n.nuxtjs.org/
     '@nuxtjs/supabase', // https://supabase.nuxtjs.org/
+    '@nuxtjs/color-mode', // https://color-mode.nuxtjs.org/
   ],
   i18n: {
     vueI18n: './i18n.config.ts',
@@ -41,4 +42,5 @@ export default defineNuxtConfig({
   },
   supabase: { redirect: false },
   vue: { defineModel: true },
+  colorMode: { classSuffix: '' },
 })

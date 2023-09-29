@@ -2,8 +2,9 @@
 import type { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 
 const { locales, locale } = useI18n()
+const availableLocales = (locales.value as LocaleObject[]).map(l => l.code)
 const switchLocalePath = useSwitchLocalePath()
-const localeToSwitchTo = computed(() => (locales.value as LocaleObject[]).find(l => l.code !== locale.value))
+// const localeToSwitchTo = computed(() => (locales.value as LocaleObject[]).find(l => l.code !== locale.value))
 
 const colorMode = useColorMode()
 
@@ -15,6 +16,8 @@ const isDark = computed({
     colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
   },
 })
+
+watch(locale, locale => navigateTo(switchLocalePath(locale)))
 </script>
 
 <template>
@@ -29,15 +32,8 @@ const isDark = computed({
       :name="isDark ? 'heroicons:moon-20-solid' : 'heroicons:sun-20-solid'"
     />
   </button>
-  <NuxtLink
-    v-if="localeToSwitchTo"
-    :to="switchLocalePath(localeToSwitchTo.code)"
-    :title="$t('switch_language')"
-  >
-    <img
-      class="h-10"
-      :src="`/flags/${locale}.svg`"
-      :alt="`Flag - ${locale}`"
-    >
-  </NuxtLink>
+  <USelect
+    v-model="locale"
+    :options="availableLocales"
+  />
 </template>

@@ -4,16 +4,48 @@ import { z } from 'zod'
 
 definePageMeta({ layout: 'auth' })
 
+function passwordRequirements(password: string) {
+  const hasLowercase = /[a-z]+/.test(password)
+  const hasUppercase = /[A-Z]+/.test(password)
+  const hasLength = password.length >= 8
+  const hasNumberOrSpecialCharacter = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
+
+  return [
+    {
+      message: 'At least one lowercase letter',
+      meetsRequirement: hasLowercase,
+    },
+    {
+      message: 'At least one uppercase letter',
+      meetsRequirement: hasUppercase,
+    },
+    {
+      message: 'At least 8 characters',
+      meetsRequirement: hasLength,
+    },
+    {
+      message: 'At least one number or symbol',
+      meetsRequirement: hasNumberOrSpecialCharacter,
+    },
+  ]
+}
+
+function passwordMeetsAllRequirements(password: string) {
+  return passwordRequirements(password).every(requirement => requirement.meetsRequirement)
+}
+
 const schema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string({ required_error: '' }).refine(val => passwordMeetsAllRequirements(val ?? ''), { message: ' ' }),
 })
 type Schema = z.output<typeof schema>
 
 const state = ref({
   email: undefined,
-  password: undefined,
+  password: '',
 })
+
+const passwordRequirementState = computed(() => passwordRequirements(state.value.password))
 
 const supabase = useSupabaseClient()
 const toast = useToast()
@@ -91,6 +123,18 @@ watch(user, () => {
         placeholder="********"
       />
     </UFormGroup>
+    <ul class="text-sm">
+      <li
+        v-for="requirement in passwordRequirementState"
+        :key="requirement.message"
+        :class="requirement.meetsRequirement ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'"
+      >
+        <Icon
+          :name="requirement.meetsRequirement ? 'i-heroicons-check-20-solid' : 'i-heroicons-x-mark-20-solid'"
+          class="mr-2 inline-block h-5 w-5"
+        /><span>{{ requirement.message }}</span>
+      </li>
+    </ul>
     <UButton
       class="mx-auto block"
       type="submit"

@@ -1,6 +1,8 @@
 <script lang='ts' setup>
+import type { SupabaseClient } from '@supabase/supabase-js'
+
 const roomName = ref('')
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient() as SupabaseClient<any>
 
 async function onCreateNewRoom() {
   const { data, error } = await supabase.from('file_room').insert([{ name: roomName.value }])

@@ -11,4 +11,5 @@ export default {
   ],
   darkMode: 'class',
   plugins: [tailwindContainerQueries],
+  theme: { container: { center: true } },
 } satisfies Config

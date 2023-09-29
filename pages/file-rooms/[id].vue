@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-import fs from 'node:fs'
 import type { FileObject, StorageError } from '@supabase/storage-js'
 
 const route = useRoute()

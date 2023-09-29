@@ -21,34 +21,40 @@ async function onLogIn() {
   <PrimaryHeading class="text-center">
     {{ $t('auth.log_in') }}
   </PrimaryHeading>
-  <form
-    class="flex flex-col gap-4 p-4"
-    @submit.prevent="onLogIn"
+  <UForm
+    :state="logInState"
+    class="space-y-4 p-4"
+    @submit="onLogIn"
   >
-    <BaseInput
-      id="email"
+    <UInput
       v-model="logInState.email"
       required
       type="email"
-      :label="$t('auth.email')"
       autocomplete="email"
+      icon="i-heroicons-at-symbol-20-solid"
+      :placeholder="$t('auth.email')"
     />
-    <BaseInput
-      id="password"
+    <UInput
       v-model="logInState.password"
       required
       type="password"
-      :label="$t('auth.password')"
       autocomplete="current-password"
+      icon="i-heroicons-key-20-solid"
+      :placeholder="$t('auth.password')"
     />
-    <BaseButton type="submit">
-      {{ $t('auth.log_in') }}
-    </BaseButton>
-    <NuxtLink
-      class="text-center text-sm underline"
-      :to="useNuxtApp().$localePath('/signup')"
+    <UButton
+      class="mx-auto block"
+      type="submit"
     >
-      {{ $t('auth.no_account') }}
-    </NuxtLink>
-  </form>
+      {{ $t('auth.log_in') }}
+    </UButton>
+    <div class="mx-auto text-center">
+      <ULink
+        class="text-sm underline"
+        :to="useNuxtApp().$localePath('/signup')"
+      >
+        {{ $t('auth.no_account') }}
+      </ULink>
+    </div>
+  </UForm>
 </template>

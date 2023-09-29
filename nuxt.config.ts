@@ -12,13 +12,12 @@ export default defineNuxtConfig({
   css: ['~/assets/main.css'],
   modules: [
     '@vueuse/nuxt', // https://vueuse.org/nuxt/README.html
-    '@nuxtjs/tailwindcss', // https://tailwindcss.nuxtjs.org/
     '@pinia/nuxt', // https://pinia.vuejs.org/ssr/nuxt.html
     'nuxt-icon', // https://github.com/nuxt-modules/icon
     '@nuxtjs/eslint-module', // https://nuxt.com/modules/eslint
     '@nuxtjs/i18n', // https://v8.i18n.nuxtjs.org/
     '@nuxtjs/supabase', // https://supabase.nuxtjs.org/
-    '@nuxtjs/color-mode', // https://color-mode.nuxtjs.org/
+    '@nuxt/ui', // https://ui.nuxt.com/
   ],
   i18n: {
     vueI18n: './i18n.config.ts',
@@ -42,5 +41,4 @@ export default defineNuxtConfig({
   },
   supabase: { redirect: false },
   vue: { defineModel: true },
-  colorMode: { classSuffix: '' },
 })

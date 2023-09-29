@@ -5,4 +5,9 @@ export default defineAppConfig({
     class: undefined,
     size: undefined,
   },
+
+  ui: {
+    primary: 'green',
+    gray: 'zinc',
+  },
 })

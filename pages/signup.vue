@@ -35,34 +35,40 @@ watch(user, () => {
   <PrimaryHeading class="text-center">
     {{ $t('auth.sign_up') }}
   </PrimaryHeading>
-  <form
-    class="flex flex-col gap-4 p-4"
-    @submit.prevent="onSignUp"
+  <UForm
+    :state="signUpState"
+    class="space-y-4 p-4"
+    @submit="onSignUp"
   >
-    <BaseInput
-      id="email"
+    <UInput
       v-model="signUpState.email"
       required
       type="email"
-      :label="$t('auth.email')"
       autocomplete="email"
+      icon="i-heroicons-at-symbol-20-solid"
+      :placeholder="$t('auth.email')"
     />
-    <BaseInput
-      id="password"
+    <UInput
       v-model="signUpState.password"
       required
       type="password"
-      :label="$t('auth.password')"
       autocomplete="new-password"
+      icon="i-heroicons-key-20-solid"
+      :placeholder="$t('auth.password')"
     />
-    <BaseButton type="submit">
-      {{ $t('auth.sign_up') }}
-    </BaseButton>
-    <NuxtLink
-      class="mx-auto text-sm underline"
-      :to="useNuxtApp().$localePath('/login')"
+    <UButton
+      class="mx-auto block"
+      type="submit"
     >
-      {{ $t('auth.already_got_account') }}
-    </NuxtLink>
-  </form>
+      {{ $t('auth.sign_up') }}
+    </UButton>
+    <div class="mx-auto text-center">
+      <ULink
+        class="text-sm underline"
+        :to="useNuxtApp().$localePath('/login')"
+      >
+        {{ $t('auth.already_got_account') }}
+      </ULink>
+    </div>
+  </UForm>
 </template>

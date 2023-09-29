@@ -6,7 +6,7 @@
     <title />
     <path
       d="M20.85,18.91C20.8,15,21,8.68,13,2c0,0,1,12-10,16a25.36,25.36,0,0,0,13,4.6S20.89,22.6,20.85,18.91Z"
-      class="fill-emerald-500"
+      class="fill-primary-600"
     />
     <path
       d="M1,23v5s12.25,3.69,21,1c7.76-2.39,9-11,9-11C21,23,18,23,1,23Z"
@@ -25,6 +25,6 @@
 
 <style lang="scss" scoped>
 .boat-outline {
-  @apply fill-none stroke-black stroke-2 [stroke-linecap:round] [stroke-linejoin:round] dark:stroke-neutral-200;
+  @apply fill-none stroke-gray-900 stroke-2 [stroke-linecap:round] [stroke-linejoin:round] dark:stroke-gray-200;
 }
 </style>

@@ -14,7 +14,7 @@ const modelValue = defineModel()
       v-bind="$attrs"
       :id="id"
       v-model="modelValue"
-      class="rounded border p-3 hover:border-sky-500"
+      class="rounded border p-3 hover:border-sky-500 dark:bg-black"
     >
   </div>
 </template>

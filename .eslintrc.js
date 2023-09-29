@@ -2,6 +2,7 @@ module.exports = {
   extends: ['@antfu', 'plugin:tailwindcss/recommended'],
   plugins: ['tailwindcss', 'vitest'],
   rules: {
+    'tailwindcss/no-custom-classname': 'off',
     'object-curly-newline': [
       'error',
       {

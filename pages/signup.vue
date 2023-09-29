@@ -1,30 +1,56 @@
 <script setup lang='ts'>
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
+import { z } from 'zod'
+
 definePageMeta({ layout: 'auth' })
 
-const supabase = useSupabaseClient()
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+})
+type Schema = z.output<typeof schema>
 
-const signUpState = reactive({
-  email: '',
-  password: '',
+const state = ref({
+  email: undefined,
+  password: undefined,
 })
 
-async function onSignUp() {
-  const { data, error } = await supabase.auth.signUp(signUpState)
+const supabase = useSupabaseClient()
+const toast = useToast()
+async function submit(event: FormSubmitEvent<Schema>) {
+  const { data, error } = await supabase.auth.signUp(event.data)
 
-  console.error('error', error)
+  const id = 'sign-up'
 
-  if (error)
-    alert(error.message)
+  if (error) {
+    return toast.add({
+      color: 'red',
+      icon: 'i-heroicons-x-circle',
+      id,
+      title: 'Something went wrong...',
+      description: error.message ?? 'Unknown error',
+    })
+  }
 
-  else if (data?.user?.identities?.length === 0)
-    alert('User already exists!')
+  if (data.user?.identities?.length === 0) {
+    return toast.add({
+      color: 'red',
+      icon: 'i-heroicons-x-circle',
+      id,
+      title: 'User already exists!',
+      description: 'Please log in instead',
+    })
+  }
 
-  else
-    alert('Check your email for the confirmation link')
+  toast.add({
+    icon: 'i-heroicons-check-circle',
+    id,
+    title: 'Nice to meet you!',
+    description: 'Check your email for the confirmation link',
+  })
 }
 
 const user = useSupabaseUser()
-
 watch(user, () => {
   if (user.value)
     return navigateTo(useNuxtApp().$localePath('/'))
@@ -36,26 +62,35 @@ watch(user, () => {
     {{ $t('auth.sign_up') }}
   </PrimaryHeading>
   <UForm
-    :state="signUpState"
+    :state="state"
+    :schema="schema"
     class="space-y-4 p-4"
-    @submit="onSignUp"
+    @submit="submit"
   >
-    <UInput
-      v-model="signUpState.email"
-      required
-      type="email"
-      autocomplete="email"
-      icon="i-heroicons-at-symbol-20-solid"
-      :placeholder="$t('auth.email')"
-    />
-    <UInput
-      v-model="signUpState.password"
-      required
-      type="password"
-      autocomplete="new-password"
-      icon="i-heroicons-key-20-solid"
-      :placeholder="$t('auth.password')"
-    />
+    <UFormGroup
+      :label="$t('auth.email')"
+      name="email"
+    >
+      <UInput
+        v-model="state.email"
+        type="email"
+        autocomplete="email"
+        icon="i-heroicons-at-symbol-20-solid"
+        :placeholder="$t('auth.example_email')"
+      />
+    </UFormGroup>
+    <UFormGroup
+      :label="$t('auth.password')"
+      name="password"
+    >
+      <UInput
+        v-model="state.password"
+        type="password"
+        autocomplete="new-password"
+        icon="i-heroicons-key-20-solid"
+        placeholder="********"
+      />
+    </UFormGroup>
     <UButton
       class="mx-auto block"
       type="submit"

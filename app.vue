@@ -48,4 +48,6 @@ const isDark = computed({
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+  <UNotifications />
 </template>

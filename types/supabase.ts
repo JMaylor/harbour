@@ -45,17 +45,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "area_member_area_id_fkey"
-            columns: ["area_id"]
-            referencedRelation: "area"
-            referencedColumns: ["id"]
+            foreignKeyName: 'area_member_area_id_fkey'
+            columns: ['area_id']
+            referencedRelation: 'area'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "area_member_user_id_fkey"
-            columns: ["user_id"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
+            foreignKeyName: 'area_member_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
     }

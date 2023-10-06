@@ -2,3 +2,19 @@ html, body, #__nuxt {
   height: 100%;
   @apply antialiased font-sans text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900;
 }
+
+::-webkit-scrollbar {
+  @apply bg-transparent h-2.5 w-2.5 rounded-full;
+}
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gray-700;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+.dark ::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}

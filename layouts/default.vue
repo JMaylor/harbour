@@ -8,25 +8,30 @@ async function onSignOut() {
 </script>
 
 <template>
-  <header class="sticky top-0 border-b backdrop-blur">
+  <header class="border-primary sticky top-0 border-b backdrop-blur">
     <div class="container flex h-12 max-w-7xl items-center justify-between">
-      <PrimaryHeading>
-        Harbour
-      </PrimaryHeading>
       <div class="flex items-center gap-2">
-        <button @click="onSignOut">
+        <BoatLogo class="h-8 w-8" />
+        <PrimaryHeading class="font-serif">
+          Harbour
+        </PrimaryHeading>
+      </div>
+      <div class="flex items-center gap-2">
+        <UButton @click="onSignOut">
           Sign out
-        </button>
+        </UButton>
         <ClientOnly>
           <LanguageAndDarkMode />
         </ClientOnly>
       </div>
     </div>
   </header>
-  <main class="container max-w-7xl">
-    <NuxtLink to="/file-rooms">
-      Rooms
+  <nav class="container max-w-7xl">
+    <NuxtLink to="/areas">
+      Areas
     </NuxtLink>
+  </nav>
+  <main class="container max-w-7xl">
     <NuxtPage />
   </main>
 </template>

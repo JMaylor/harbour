@@ -50,35 +50,33 @@ const passwordValid = computed(() => passwordMeetsAllRequirements(state.value.pa
 
 const supabase = useTypedSupabaseClient()
 const toast = useToast()
-const [isLoading, toggleIsLoading] = useToggle()
-async function submit(event: FormSubmitEvent<Schema>) {
-  toggleIsLoading(true)
-  const { data, error } = await supabase.auth.signUp(event.data)
-
-  if (error) {
-    toggleIsLoading(false)
-    return toast.add({
-      color: 'red',
-      icon: 'i-heroicons-x-circle',
-      title: 'Something went wrong...',
-      description: error.message,
-    })
-  }
-
-  if (data.user?.identities?.length === 0) {
-    toggleIsLoading(false)
-    return toast.add({
-      color: 'red',
-      icon: 'i-heroicons-x-circle',
-      title: 'User already exists!',
-      description: 'Please log in instead',
-    })
-  }
-
-  toast.add({
-    icon: 'i-heroicons-check-circle',
-    title: 'Nice to meet you!',
-    description: 'Check your email for the confirmation link',
+const { isLoading, mutate: signUp } = useMutation({
+  mutationFn: async (credentials: Schema) => {
+    const { data, error } = await supabase.auth.signUp(credentials)
+    if (error)
+      throw new Error(error.message)
+    if (data.user?.identities?.length === 0)
+      throw new Error('User already exists')
+    return data
+  },
+})
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  signUp(event.data, {
+    onError: (error: any) => {
+      toast.add({
+        color: 'red',
+        icon: 'i-heroicons-x-circle',
+        title: 'Something went wrong...',
+        description: error?.message ?? String(error),
+      })
+    },
+    onSuccess: () => {
+      toast.add({
+        icon: 'i-heroicons-check-circle',
+        title: 'Nice to meet you!',
+        description: 'Check your email for the confirmation link',
+      })
+    },
   })
 }
 
@@ -98,7 +96,7 @@ watch(user, () => {
     :schema="schema"
     class="space-y-4 p-4"
     :validate-on="['submit']"
-    @submit="submit"
+    @submit="onSubmit"
   >
     <UFormGroup
       required

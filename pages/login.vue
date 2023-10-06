@@ -17,29 +17,33 @@ const state = reactive({
 
 const supabase = useTypedSupabaseClient()
 const toast = useToast()
-const [isLoading, toggleIsLoading] = useToggle()
-async function submit(event: FormSubmitEvent<Schema>) {
-  toggleIsLoading(true)
-
-  const { error, data } = await supabase.auth.signInWithPassword(event.data)
-
-  if (error) {
-    toggleIsLoading(false)
-    return toast.add({
-      color: 'red',
-      icon: 'i-heroicons-x-circle',
-      title: 'Something went wrong...',
-      description: error.message,
-    })
-  }
-
-  toast.add({
-    icon: 'i-heroicons-check-circle',
-    title: 'Welcome back!',
-    description: `Nice to see you again, ${data.user.email}.`,
+const { isLoading, mutate: login } = useMutation({
+  mutationFn: async (credentials: Schema) => {
+    const { data, error } = await supabase.auth.signInWithPassword(credentials)
+    if (error)
+      throw new Error(error.message)
+    return data
+  },
+})
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  login(event.data, {
+    onError: (error: any) => {
+      toast.add({
+        color: 'red',
+        icon: 'i-heroicons-x-circle',
+        title: 'Something went wrong...',
+        description: error?.message ?? String(error),
+      })
+    },
+    onSuccess: (data) => {
+      toast.add({
+        icon: 'i-heroicons-check-circle',
+        title: 'Welcome back!',
+        description: `Nice to see you again, ${data.user.email}`,
+      })
+      navigateTo(useNuxtApp().$localePath('/'))
+    },
   })
-
-  navigateTo(useNuxtApp().$localePath('/'))
 }
 
 const user = useSupabaseUser()
@@ -58,7 +62,7 @@ watch(user, () => {
     :schema="schema"
     class="space-y-4 p-4"
     :validate-on="['submit']"
-    @submit="submit"
+    @submit="onSubmit"
   >
     <UFormGroup
       required

@@ -8,6 +8,14 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  imports: {
+    presets: [
+      {
+        from: '@tanstack/vue-query',
+        imports: ['useMutation'],
+      },
+    ],
+  },
   typescript: { typeCheck: true },
   css: ['~/assets/main.css'],
   modules: [

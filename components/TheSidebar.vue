@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
 import { z } from 'zod'
+import type { Database } from '~/types/supabase'
 
 const [isOpen, toggleIsOpen] = useToggle()
 
@@ -24,6 +25,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     description: `Taking you to ${state.name}... ${data}`,
   })
 
+  toggleIsOpen(false)
+
   navigateTo(useNuxtApp().$localePath(`/area/${data}`))
 }
 const links = [
@@ -33,16 +36,42 @@ const links = [
     to: '/',
   },
   {
-    label: 'New',
+    label: 'New Area',
     icon: 'i-heroicons-plus',
     iconClass: 'bg-primary',
     click: () => toggleIsOpen(true),
   },
 ]
+
+const { data: areas } = await supabase.from('area').select('*')
+const userAreas = ref(areas)
+const channel = supabase
+  .channel('any')
+  .on<Database['public']['Tables']['area']['Row']>('postgres_changes', {
+    event: 'INSERT',
+    schema: 'public',
+    table: 'area',
+  }, payload => userAreas.value?.push(payload.new))
+  .subscribe()
+
+onUnmounted(() => channel.unsubscribe())
+
+const linksToShow = computed(() => {
+  if (!userAreas.value)
+    return links
+  return [
+    ...links,
+    ...userAreas.value.map(area => ({
+      label: area.name,
+      to: `/area/${area.id}`,
+      icon: 'i-heroicons-folder',
+    })),
+  ]
+})
 </script>
 
 <template>
-  <UVerticalNavigation :links="links" />
+  <UVerticalNavigation :links="linksToShow" />
   <UModal v-model="isOpen">
     <UCard>
       <template #header>

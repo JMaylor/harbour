@@ -12,6 +12,7 @@ export function useErrorToast(args: ToastArgs) {
 
 export function useSuccessToast(args: ToastArgs) {
   useToast().add({
+    color: 'green',
     icon: 'i-heroicons-check-circle',
     ...args,
   })

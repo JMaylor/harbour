@@ -17,14 +17,17 @@ const state = reactive({
 
 const supabase = useTypedSupabaseClient()
 const toast = useToast()
+const [isLoading, toggleIsLoading] = useToggle()
 async function submit(event: FormSubmitEvent<Schema>) {
+  toggleIsLoading(true)
+
   const { error, data } = await supabase.auth.signInWithPassword(event.data)
 
   if (error) {
+    toggleIsLoading(false)
     return toast.add({
       color: 'red',
       icon: 'i-heroicons-x-circle',
-      id: 'log-in',
       title: 'Something went wrong...',
       description: error.message,
     })
@@ -58,6 +61,7 @@ watch(user, () => {
     @submit="submit"
   >
     <UFormGroup
+      required
       :label="$t('auth.email')"
       name="email"
     >
@@ -70,6 +74,7 @@ watch(user, () => {
       />
     </UFormGroup>
     <UFormGroup
+      required
       :label="$t('auth.password')"
       name="password"
     >
@@ -81,19 +86,22 @@ watch(user, () => {
         placeholder="********"
       />
     </UFormGroup>
-    <UButton
-      class="mx-auto block"
-      type="submit"
-    >
-      {{ $t('auth.log_in') }}
-    </UButton>
+    <div class="flex justify-center">
+      <UButton
+        type="submit"
+        :loading="isLoading"
+      >
+        {{ $t('auth.log_in') }}
+      </UButton>
+    </div>
     <div class="mx-auto text-center">
-      <ULink
-        class="text-sm underline"
+      <UButton
+        variant="link"
+        color="blue"
         :to="useNuxtApp().$localePath('/signup')"
       >
         {{ $t('auth.no_account') }}
-      </ULink>
+      </UButton>
     </div>
   </UForm>
 </template>

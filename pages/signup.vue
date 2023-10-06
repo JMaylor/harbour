@@ -46,29 +46,30 @@ const state = ref({
 })
 
 const passwordRequirementState = computed(() => passwordRequirements(state.value.password))
+const passwordValid = computed(() => passwordMeetsAllRequirements(state.value.password))
 
 const supabase = useTypedSupabaseClient()
 const toast = useToast()
+const [isLoading, toggleIsLoading] = useToggle()
 async function submit(event: FormSubmitEvent<Schema>) {
+  toggleIsLoading(true)
   const { data, error } = await supabase.auth.signUp(event.data)
 
-  const id = 'sign-up'
-
   if (error) {
+    toggleIsLoading(false)
     return toast.add({
       color: 'red',
       icon: 'i-heroicons-x-circle',
-      id,
       title: 'Something went wrong...',
-      description: error.message ?? 'Unknown error',
+      description: error.message,
     })
   }
 
   if (data.user?.identities?.length === 0) {
+    toggleIsLoading(false)
     return toast.add({
       color: 'red',
       icon: 'i-heroicons-x-circle',
-      id,
       title: 'User already exists!',
       description: 'Please log in instead',
     })
@@ -76,7 +77,6 @@ async function submit(event: FormSubmitEvent<Schema>) {
 
   toast.add({
     icon: 'i-heroicons-check-circle',
-    id,
     title: 'Nice to meet you!',
     description: 'Check your email for the confirmation link',
   })
@@ -101,6 +101,7 @@ watch(user, () => {
     @submit="submit"
   >
     <UFormGroup
+      required
       :label="$t('auth.email')"
       name="email"
     >
@@ -113,6 +114,7 @@ watch(user, () => {
       />
     </UFormGroup>
     <UFormGroup
+      required
       :label="$t('auth.password')"
       name="password"
     >
@@ -136,19 +138,23 @@ watch(user, () => {
         /><span>{{ requirement.message }}</span>
       </li>
     </ul>
-    <UButton
-      class="mx-auto block"
-      type="submit"
-    >
-      {{ $t('auth.sign_up') }}
-    </UButton>
     <div class="mx-auto text-center">
-      <ULink
-        class="text-sm underline"
+      <UButton
+        type="submit"
+        :disabled="!passwordValid"
+        :loading="isLoading"
+      >
+        {{ $t('auth.sign_up') }}
+      </UButton>
+    </div>
+    <div class="mx-auto text-center">
+      <UButton
+        variant="link"
+        color="blue"
         :to="useNuxtApp().$localePath('/login')"
       >
         {{ $t('auth.already_got_account') }}
-      </ULink>
+      </UButton>
     </div>
   </UForm>
 </template>

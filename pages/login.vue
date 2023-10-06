@@ -97,7 +97,7 @@ watch(user, () => {
     <div class="mx-auto text-center">
       <UButton
         variant="link"
-        color="blue"
+        color="sky"
         :to="useNuxtApp().$localePath('/signup')"
       >
         {{ $t('auth.no_account') }}

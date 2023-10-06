@@ -150,7 +150,7 @@ watch(user, () => {
     <div class="mx-auto text-center">
       <UButton
         variant="link"
-        color="blue"
+        color="sky"
         :to="useNuxtApp().$localePath('/login')"
       >
         {{ $t('auth.already_got_account') }}

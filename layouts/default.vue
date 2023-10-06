@@ -17,12 +17,15 @@ async function onSignOut() {
         </PrimaryHeading>
       </div>
       <div class="flex items-center gap-2">
-        <UButton @click="onSignOut">
+        <UButton
+          icon="i-heroicons-arrow-left-on-rectangle-20-solid"
+          variant="link"
+          @click="onSignOut"
+        >
           Sign out
         </UButton>
-        <ClientOnly>
-          <LanguageAndDarkMode />
-        </ClientOnly>
+        <UDarkModeToggle />
+        <ULocaleSelect />
       </div>
     </div>
   </header>

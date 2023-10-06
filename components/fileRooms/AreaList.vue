@@ -17,7 +17,7 @@ const { data: areas, error } = await supabase.from('area').select('*')
         v-for="area in areas"
         :key="area.id"
       >
-        <NuxtLink :to="`/areas/${area.id}`">
+        <NuxtLink :to="`/area/${area.id}`">
           {{ area.name }}
         </NuxtLink>
       </li>

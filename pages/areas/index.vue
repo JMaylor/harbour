@@ -1,16 +1,16 @@
 <template>
-  <NuxtLink :to="useNuxtApp().$localePath('/file-rooms/new')">
-    {{ $t('create_new_room') }}
+  <NuxtLink :to="useNuxtApp().$localePath('/areas/new')">
+    {{ $t('create_new_area') }}
   </NuxtLink>
   <Suspense>
     <template #fallback>
       <p>
-        {{ $t('loading_rooms') }}
+        {{ $t('loading_areas') }}
       </p>
     </template>
 
     <template #default>
-      <FileRoomList />
+      <AreaList />
     </template>
   </Suspense>
 

@@ -9,9 +9,9 @@ async function onSignOut() {
 
 <template>
   <header class="border-primary sticky top-0 border-b backdrop-blur">
-    <div class="container flex h-12 max-w-7xl items-center justify-between">
+    <div class="container flex h-16 max-w-7xl items-center justify-between">
       <div class="flex items-center gap-2">
-        <BoatLogo class="h-8 w-8" />
+        <BoatLogo class="h-10" />
         <PrimaryHeading class="font-serif">
           Harbour
         </PrimaryHeading>

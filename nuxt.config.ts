@@ -49,4 +49,5 @@ export default defineNuxtConfig({
   },
   supabase: { redirect: false },
   vue: { defineModel: true },
+  ui: { icons: ['heroicons', 'simple-icons'] },
 })

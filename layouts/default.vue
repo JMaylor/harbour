@@ -25,6 +25,14 @@ async function onSignOut() {
           Sign out
         </UButton>
         <UDarkModeToggle />
+        <UButton
+          color="gray"
+          variant="ghost"
+          to="https://github.com/JMaylor/harbour"
+          target="_blank"
+          icon="i-simple-icons-github"
+          aria-label="GitHub"
+        />
         <ULocaleSelect />
       </div>
     </div>

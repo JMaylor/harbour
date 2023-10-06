@@ -49,6 +49,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           @submit="onSubmit"
         >
           <UFormGroup
+            required
             :label="$t('area_name')"
             name="name"
           >

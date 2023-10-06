@@ -1,5 +1,4 @@
 <template>
-  <CreateNewArea />
   <Suspense>
     <template #fallback>
       <p>

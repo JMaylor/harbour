@@ -49,7 +49,6 @@ const passwordRequirementState = computed(() => passwordRequirements(state.value
 const passwordValid = computed(() => passwordMeetsAllRequirements(state.value.password))
 
 const supabase = useTypedSupabaseClient()
-const toast = useToast()
 const { isLoading, mutate: signUp } = useMutation({
   mutationFn: async (credentials: Schema) => {
     const { data, error } = await supabase.auth.signUp(credentials)
@@ -63,16 +62,13 @@ const { isLoading, mutate: signUp } = useMutation({
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   signUp(event.data, {
     onError: (error: any) => {
-      toast.add({
-        color: 'red',
-        icon: 'i-heroicons-x-circle',
+      useErrorToast({
         title: 'Something went wrong...',
         description: error?.message ?? String(error),
       })
     },
     onSuccess: () => {
-      toast.add({
-        icon: 'i-heroicons-check-circle',
+      useSuccessToast({
         title: 'Nice to meet you!',
         description: 'Check your email for the confirmation link',
       })

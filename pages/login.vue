@@ -16,7 +16,6 @@ const state = reactive({
 })
 
 const supabase = useTypedSupabaseClient()
-const toast = useToast()
 const { isLoading, mutate: login } = useMutation({
   mutationFn: async (credentials: Schema) => {
     const { data, error } = await supabase.auth.signInWithPassword(credentials)
@@ -28,16 +27,13 @@ const { isLoading, mutate: login } = useMutation({
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   login(event.data, {
     onError: (error: any) => {
-      toast.add({
-        color: 'red',
-        icon: 'i-heroicons-x-circle',
+      useErrorToast({
         title: 'Something went wrong...',
         description: error?.message ?? String(error),
       })
     },
     onSuccess: (data) => {
-      toast.add({
-        icon: 'i-heroicons-check-circle',
+      useSuccessToast({
         title: 'Welcome back!',
         description: `Nice to see you again, ${data.user.email}`,
       })

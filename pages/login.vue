@@ -2,6 +2,7 @@
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
 import { z } from 'zod'
 
+useHead({ title: 'Login' })
 definePageMeta({ layout: 'auth' })
 
 const schema = z.object({

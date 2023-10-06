@@ -2,6 +2,7 @@
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
 import { z } from 'zod'
 
+useHead({ title: 'Sign up' })
 definePageMeta({ layout: 'auth' })
 
 function passwordRequirements(password: string) {

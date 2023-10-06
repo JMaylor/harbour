@@ -15,7 +15,7 @@ const state = reactive({
   password: undefined,
 })
 
-const supabase = useSupabaseClient()
+const supabase = useTypedSupabaseClient()
 const toast = useToast()
 async function submit(event: FormSubmitEvent<Schema>) {
   const { error, data } = await supabase.auth.signInWithPassword(event.data)

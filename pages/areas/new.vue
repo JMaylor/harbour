@@ -1,13 +1,12 @@
 <script lang='ts' setup>
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types/form'
 import { z } from 'zod'
-import type { Database } from '~/types/supabase'
 
 const schema = z.object({ name: z.string().trim().min(1) })
 type Schema = z.output<typeof schema>
 const state = reactive({ name: undefined })
 
-const supabase = useSupabaseClient<Database>()
+const supabase = useTypedSupabaseClient()
 const toast = useToast()
 async function submit(event: FormSubmitEvent<Schema>) {
   const { data, error } = await supabase.rpc('create_area_and_admin', { p_name: state.name })

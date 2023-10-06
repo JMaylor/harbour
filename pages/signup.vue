@@ -47,7 +47,7 @@ const state = ref({
 
 const passwordRequirementState = computed(() => passwordRequirements(state.value.password))
 
-const supabase = useSupabaseClient()
+const supabase = useTypedSupabaseClient()
 const toast = useToast()
 async function submit(event: FormSubmitEvent<Schema>) {
   const { data, error } = await supabase.auth.signUp(event.data)

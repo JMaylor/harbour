@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
+const supabase = useTypedSupabaseClient()
 
 async function onSignOut() {
   await supabase.auth.signOut()

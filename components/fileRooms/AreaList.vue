@@ -1,7 +1,6 @@
 <script lang='ts' setup>
-import type { Database } from '~/types/supabase'
 
-const supabase = useSupabaseClient<Database>()
+const supabase = useTypedSupabaseClient()
 
 const { data: areas, error } = await supabase.from('area').select('*')
 </script>

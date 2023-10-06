@@ -4,7 +4,7 @@ import type { FileObject, StorageError } from '@supabase/storage-js'
 const route = useRoute()
 const id = route.params.id as string
 
-const supabase = useSupabaseClient()
+const supabase = useTypedSupabaseClient()
 
 const files = ref<FileObject[]>()
 const storageError = ref<StorageError>()

@@ -28,7 +28,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     description: `Taking you to ${state.name}... ${data}`,
   })
 
-  navigateTo(useNuxtApp().$localePath(`/areas/${data}`))
+  navigateTo(useNuxtApp().$localePath(`/area/${data}`))
 }
 </script>
 

@@ -9,21 +9,17 @@ type Schema = z.output<typeof schema>
 const state = reactive({ name: undefined })
 
 const supabase = useTypedSupabaseClient()
-const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   const { data, error } = await supabase.rpc('create_area_and_admin', { p_name: event.data.name })
 
   if (error) {
-    return toast.add({
-      color: 'red',
-      icon: 'i-heroicons-x-circle',
+    return useErrorToast({
       title: 'Could not create the area!',
       description: error.message,
     })
   }
 
-  toast.add({
-    icon: 'i-heroicons-check-circle',
+  useSuccessToast({
     title: 'New area created!',
     description: `Taking you to ${state.name}... ${data}`,
   })

@@ -31,14 +31,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UButton
     icon="i-heroicons-plus-20-solid"
-    label="Create New Area"
+    :label="$t('create_new_area')"
     variant="outline"
     @click="toggleIsOpen(true)"
   />
   <UModal v-model="isOpen">
     <UCard>
       <template #header>
-        Create New Area
+        {{ $t('create_new_area') }}
       </template>
       <template #default>
         <UForm
@@ -55,6 +55,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           >
             <UInput
               v-model="state.name"
+              autocomplete="off"
             />
           </UFormGroup>
         </UForm>

@@ -54,6 +54,7 @@ watch(user, () => {
     :state="state"
     :schema="schema"
     class="space-y-4 p-4"
+    :validate-on="['submit']"
     @submit="submit"
   >
     <UFormGroup

@@ -10,6 +10,12 @@ const files = ref<FileObject[]>()
 const filteredFiles = computed(() => files.value?.filter(f => f.name !== '.emptyFolderPlaceholder'))
 const storageError = ref<StorageError>()
 
+const { data: members } = await supabase.from('area_member').select(`
+  user_id (name),
+  is_admin,
+  area_id
+`).eq('area_id', id)
+
 const path = ref(id)
 watch(path, async (path) => {
   const { data, error } = await supabase.storage.from('documents').list(path)
@@ -60,4 +66,5 @@ async function onClick(item: FileObject) {
       </button>
     </li>
   </ul>
+  <pre>{{ members.map(member => member.user_id.name) }}</pre>
 </template>

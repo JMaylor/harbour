@@ -10,6 +10,7 @@ type Schema = z.output<typeof schema>
 const state = reactive({ name: undefined })
 
 const supabase = useTypedSupabaseClient()
+const supabaseUser = useSupabaseUser()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   const { data, error } = await supabase.rpc('create_area_and_admin', { p_name: event.data.name })
 
@@ -84,7 +85,13 @@ async function onSignOut() {
 <template>
   <aside class="sticky top-[calc(4rem+1px)] -mx-4 flex h-full max-h-[calc(100vh-4rem-1px)] flex-col justify-between overflow-y-auto px-4 py-8">
     <UVerticalNavigation :links="linksToShow" />
-    <UVerticalNavigation :links="[signOutLink]" />
+    <div>
+      <p>{{ supabaseUser?.user_metadata.name }}</p>
+      <p class="truncate">
+        {{ supabaseUser?.email }}
+      </p>
+      <UVerticalNavigation :links="[signOutLink]" />
+    </div>
   </aside>
   <TheCommandPalette
     :areas="userAreas"

@@ -21,15 +21,17 @@ const { metaSymbol } = useShortcuts()
 const groups = computed(() => [
   {
     key: 'areas',
-    commands: props.areas.map(area => ({
+    label: 'Areas',
     commands: props.areas?.map(area => ({
       id: area.id,
+      icon: 'i-heroicons-folder',
       label: area.name,
       to: `/area/${area.id}`,
     })),
   },
   {
     key: 'actions',
+    label: 'Actions',
     commands: [
       {
         id: 'new-area',
@@ -42,6 +44,7 @@ const groups = computed(() => [
           }, 250)
         },
         shortcuts: [metaSymbol.value, 'N'],
+        iconClass: 'bg-primary',
       },
     ],
   },

@@ -73,7 +73,6 @@ const linksToShow = computed(() => {
 <template>
   <UVerticalNavigation :links="linksToShow" />
   <TheCommandPalette
-    v-if="userAreas"
     :areas="userAreas"
     @new-area="toggleIsOpen(true)"
   />

@@ -2,7 +2,7 @@
 import type { Database } from '~/types/supabase'
 
 const props = defineProps<{
-  areas: Database['public']['Tables']['area']['Row'][]
+  areas?: Database['public']['Tables']['area']['Row'][] | null
 }>()
 
 const emit = defineEmits<{
@@ -22,6 +22,7 @@ const groups = computed(() => [
   {
     key: 'areas',
     commands: props.areas.map(area => ({
+    commands: props.areas?.map(area => ({
       id: area.id,
       label: area.name,
       to: `/area/${area.id}`,
@@ -66,6 +67,7 @@ function onSelect(option: any) {
   <div>
     <UModal v-model="isOpen">
       <UCommandPalette
+        :loading="!areas"
         :groups="groups"
         @update:model-value="onSelect"
       />

@@ -68,10 +68,24 @@ const linksToShow = computed(() => {
     })),
   ]
 })
+
+const signOutLink = {
+  label: 'Sign out',
+  icon: 'i-heroicons-arrow-left-on-rectangle-20-solid',
+  iconClass: 'bg-primary',
+  click: onSignOut,
+}
+async function onSignOut() {
+  await supabase.auth.signOut()
+  navigateTo(useNuxtApp().$localePath('/login'))
+}
 </script>
 
 <template>
-  <UVerticalNavigation :links="linksToShow" />
+  <aside class="sticky top-[calc(4rem+1px)] -mx-4 flex h-full max-h-[calc(100vh-4rem-1px)] flex-col justify-between overflow-y-auto px-4 py-8">
+    <UVerticalNavigation :links="linksToShow" />
+    <UVerticalNavigation :links="[signOutLink]" />
+  </aside>
   <TheCommandPalette
     :areas="userAreas"
     @new-area="toggleIsOpen(true)"

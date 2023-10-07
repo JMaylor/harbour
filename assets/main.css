@@ -3,6 +3,10 @@ html, body, #__nuxt {
   min-height: 100%;
 }
 
+#__nuxt {
+  @apply flex flex-col
+}
+
 ::-webkit-scrollbar {
   @apply bg-transparent h-2.5 w-2.5 rounded-full;
 }

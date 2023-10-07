@@ -43,6 +43,7 @@ async function onClick(item: FileObject) {
 </script>
 
 <template>
+  <FileUpload :path="path" />
   <p v-if="storageError">
     {{ storageError.message }}
   </p>

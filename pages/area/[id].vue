@@ -7,11 +7,12 @@ const id = route.params.id as string
 const supabase = useTypedSupabaseClient()
 
 const files = ref<FileObject[]>()
+const filteredFiles = computed(() => files.value?.filter(f => f.name !== '.emptyFolderPlaceholder'))
 const storageError = ref<StorageError>()
 
-const path = ref('')
+const path = ref(id)
 watch(path, async (path) => {
-  const { data, error } = await supabase.storage.from(id).list(path)
+  const { data, error } = await supabase.storage.from('documents').list(path)
   if (error)
     storageError.value = error
   else
@@ -20,7 +21,7 @@ watch(path, async (path) => {
 
 async function onClick(item: FileObject) {
   if (item.id) {
-    const { data, error } = await supabase.storage.from(id).download(`${path.value}/${item.name}`)
+    const { data, error } = await supabase.storage.from('documents').download(`${path.value}/${item.name}`)
     if (error) {
       console.error(error)
     }
@@ -45,9 +46,9 @@ async function onClick(item: FileObject) {
   <p v-if="storageError">
     {{ storageError.message }}
   </p>
-  <ul v-else-if="files">
+  <ul v-else-if="filteredFiles">
     <li
-      v-for="item in files"
+      v-for="item in filteredFiles"
       :key="item.name"
     >
       <button

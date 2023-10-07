@@ -36,7 +36,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     onSuccess: (data) => {
       useSuccessToast({
         title: 'Welcome back!',
-        description: `Nice to see you again, ${data.user.email}`,
+        description: `Nice to see you again, ${data.user.user_metadata.name}`,
       })
       navigateTo(useNuxtApp().$localePath('/'))
     },

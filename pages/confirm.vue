@@ -4,8 +4,13 @@ defineI18nRoute(false)
 
 const user = useSupabaseUser()
 watch(user, () => {
-  if (user.value)
-    return navigateTo(useNuxtApp().$localePath('/'))
+  if (user.value) {
+    useSuccessToast({
+      title: 'Thanks for confirming!',
+      description: 'Your email has been verified and you\'re all good to go.',
+    })
+    navigateTo(useNuxtApp().$localePath('/'))
+  }
 }, { immediate: true })
 </script>
 

@@ -5,11 +5,11 @@ import { z } from 'zod'
 useHead({ title: 'Sign up' })
 definePageMeta({ layout: 'auth' })
 
-function passwordRequirements(password: string) {
-  const hasLowercase = /[a-z]+/.test(password)
-  const hasUppercase = /[A-Z]+/.test(password)
-  const hasLength = password.length >= 8
-  const hasNumberOrSpecialCharacter = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
+function passwordRequirements(password?: string) {
+  const hasLowercase = password && /[a-z]+/.test(password)
+  const hasUppercase = password && /[A-Z]+/.test(password)
+  const hasLength = password && password.length >= 8
+  const hasNumberOrSpecialCharacter = password && /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
 
   return [
     {
@@ -31,19 +31,21 @@ function passwordRequirements(password: string) {
   ]
 }
 
-function passwordMeetsAllRequirements(password: string) {
+function passwordMeetsAllRequirements(password?: string) {
   return passwordRequirements(password).every(requirement => requirement.meetsRequirement)
 }
 
 const schema = z.object({
   email: z.string().email(),
   password: z.string({ required_error: '' }).refine(val => passwordMeetsAllRequirements(val ?? ''), { message: ' ' }),
+  name: z.string().min(2),
 })
 type Schema = z.output<typeof schema>
 
 const state = ref({
   email: undefined,
-  password: '',
+  password: undefined,
+  name: undefined,
 })
 
 const passwordRequirementState = computed(() => passwordRequirements(state.value.password))
@@ -52,7 +54,11 @@ const passwordValid = computed(() => passwordMeetsAllRequirements(state.value.pa
 const supabase = useTypedSupabaseClient()
 const { isLoading, mutate: signUp } = useMutation({
   mutationFn: async (credentials: Schema) => {
-    const { data, error } = await supabase.auth.signUp(credentials)
+    const { data, error } = await supabase.auth.signUp({
+      email: credentials.email,
+      password: credentials.password,
+      options: { data: { name: credentials.name } },
+    })
     if (error)
       throw new Error(error.message)
     if (data.user?.identities?.length === 0)
@@ -68,9 +74,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         description: error?.message ?? String(error),
       })
     },
-    onSuccess: () => {
+    onSuccess: (_data, { name }) => {
       useSuccessToast({
-        title: 'Nice to meet you!',
+        title: `Nice to meet you, ${name}!`,
         description: 'Check your email for the confirmation link',
       })
     },
@@ -95,6 +101,18 @@ watch(user, () => {
     :validate-on="['submit']"
     @submit="onSubmit"
   >
+    <UFormGroup
+      required
+      label="Name"
+      name="name"
+    >
+      <UInput
+        v-model="state.name"
+        autocomplete="name"
+        icon="i-heroicons-user-20-solid"
+        placeholder="John Doe"
+      />
+    </UFormGroup>
     <UFormGroup
       required
       :label="$t('auth.email')"

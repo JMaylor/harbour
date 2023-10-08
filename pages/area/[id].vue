@@ -10,12 +10,8 @@ const files = ref<FileObject[]>()
 const filteredFiles = computed(() => files.value?.filter(f => f.name !== '.emptyFolderPlaceholder'))
 const storageError = ref<StorageError>()
 
-const { data: members } = await supabase.from('area_member').select(`
-  user_id (name),
-  is_admin,
-  area_id
-`).eq('area_id', id)
-
+// const { data: members } = await supabase.from('vw_area_members').select('user_id, is_admin, name')
+const { data: members } = await supabase.from('vw_area_members').select('*').eq('area_id', id)
 const path = ref(id)
 watch(path, async (path) => {
   const { data, error } = await supabase.storage.from('documents').list(path)
@@ -66,5 +62,19 @@ async function onClick(item: FileObject) {
       </button>
     </li>
   </ul>
-  <pre>{{ members.map(member => member.user_id.name) }}</pre>
+  <ul
+    v-if="members"
+    class="space-y-2 p-2"
+  >
+    <li
+      v-for="member in members"
+      :key="member.user_id!"
+      class="flex items-center gap-2"
+    >
+      <UAvatar
+        :icon="member.is_admin ? 'i-heroicons-key-20-solid' : 'i-heroicons-user-20-solid'"
+      />
+      <span>{{ member.name }}</span>
+    </li>
+  </ul>
 </template>

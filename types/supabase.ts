@@ -51,12 +51,6 @@ export interface Database {
             referencedColumns: ['area_id']
           },
           {
-            foreignKeyName: 'area_member_area_id_fkey'
-            columns: ['area_id']
-            referencedRelation: 'vw_area_members'
-            referencedColumns: ['area_id']
-          },
-          {
             foreignKeyName: 'area_member_user_id_fkey'
             columns: ['user_id']
             referencedRelation: 'profiles'
@@ -99,6 +93,12 @@ export interface Database {
           user_id: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: 'area_member_area_id_fkey'
+            columns: ['area_id']
+            referencedRelation: 'area'
+            referencedColumns: ['area_id']
+          },
           {
             foreignKeyName: 'area_member_user_id_fkey'
             columns: ['user_id']

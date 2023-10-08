@@ -3,9 +3,9 @@
     <div class="container flex h-16 max-w-7xl items-center justify-between">
       <div class="flex items-center gap-2">
         <BoatLogo class="h-10" />
-        <PrimaryHeading class="font-serif">
+        <span class="font-serif text-4xl">
           Harbour
-        </PrimaryHeading>
+        </span>
       </div>
       <div class="flex items-center gap-2">
         <UDarkModeToggle />

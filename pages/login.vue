@@ -51,9 +51,9 @@ watch(user, () => {
 </script>
 
 <template>
-  <PrimaryHeading class="text-center">
+  <h1 class="text-center text-4xl">
     {{ $t('auth.log_in') }}
-  </PrimaryHeading>
+  </h1>
   <UForm
     :state="state"
     :schema="schema"

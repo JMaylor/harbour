@@ -10,7 +10,8 @@ const files = ref<FileObject[]>()
 const filteredFiles = computed(() => files.value?.filter(f => f.name !== '.emptyFolderPlaceholder'))
 const storageError = ref<StorageError>()
 
-// const { data: members } = await supabase.from('vw_area_members').select('user_id, is_admin, name')
+const { data: areaInfo } = await supabase.from('area').select('*').eq('area_id', id).single()
+const timeAgo = useTimeAgo(areaInfo!.created_at)
 const { data: members } = await supabase.from('vw_area_members').select('*').eq('area_id', id)
 const path = ref(id)
 watch(path, async (path) => {
@@ -45,6 +46,26 @@ async function onClick(item: FileObject) {
 </script>
 
 <template>
+  <PrimaryHeading>{{ areaInfo?.name }}</PrimaryHeading>
+  <span class="text-primary text-sm">Room created {{ timeAgo }}</span>
+  <SecondaryHeading>
+    Members
+  </SecondaryHeading>
+  <ul
+    v-if="members"
+    class="space-y-2 p-2"
+  >
+    <li
+      v-for="member in members"
+      :key="member.user_id!"
+      class="flex items-center gap-2"
+    >
+      <UAvatar
+        :icon="member.is_admin ? 'i-heroicons-key-20-solid' : 'i-heroicons-user-20-solid'"
+      />
+      <span>{{ member.name }}</span>
+    </li>
+  </ul>
   <FileUpload :path="path" />
   <p v-if="storageError">
     {{ storageError.message }}
@@ -60,21 +81,6 @@ async function onClick(item: FileObject) {
       >
         {{ item.name }}
       </button>
-    </li>
-  </ul>
-  <ul
-    v-if="members"
-    class="space-y-2 p-2"
-  >
-    <li
-      v-for="member in members"
-      :key="member.user_id!"
-      class="flex items-center gap-2"
-    >
-      <UAvatar
-        :icon="member.is_admin ? 'i-heroicons-key-20-solid' : 'i-heroicons-user-20-solid'"
-      />
-      <span>{{ member.name }}</span>
     </li>
   </ul>
 </template>

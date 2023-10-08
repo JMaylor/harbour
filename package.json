@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare",
     "test": "vitest",
     "type-check": "vue-tsc --noEmit",
-    "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/supabase.ts"
+    "update-types": "npx supabase gen types typescript --project-id dpogoulurvdaxxoekjxf --schema public > types/supabase.ts && eslint types/supabase.ts --fix"
   },
   "dependencies": {
     "@iconify/json": "^2.2.125",
@@ -38,6 +38,7 @@
     "jsdom": "^22.1.0",
     "nuxt": "^3.7.4",
     "sass": "^1.69.0",
+    "supabase": "^1.100.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.8.15"

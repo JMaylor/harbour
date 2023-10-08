@@ -11,18 +11,18 @@ export interface Database {
     Tables: {
       area: {
         Row: {
+          area_id: string
           created_at: string
-          id: string
           name: string
         }
         Insert: {
+          area_id?: string
           created_at?: string
-          id?: string
           name: string
         }
         Update: {
+          area_id?: string
           created_at?: string
-          id?: string
           name?: string
         }
         Relationships: []
@@ -48,36 +48,42 @@ export interface Database {
             foreignKeyName: 'area_member_area_id_fkey'
             columns: ['area_id']
             referencedRelation: 'area'
-            referencedColumns: ['id']
+            referencedColumns: ['area_id']
+          },
+          {
+            foreignKeyName: 'area_member_area_id_fkey'
+            columns: ['area_id']
+            referencedRelation: 'vw_area_members'
+            referencedColumns: ['area_id']
           },
           {
             foreignKeyName: 'area_member_user_id_fkey'
             columns: ['user_id']
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['user_id']
           },
         ]
       }
       profiles: {
         Row: {
-          id: string
           name: string | null
           updated_at: string | null
+          user_id: string
         }
         Insert: {
-          id: string
           name?: string | null
           updated_at?: string | null
+          user_id: string
         }
         Update: {
-          id?: string
           name?: string | null
           updated_at?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'profiles_id_fkey'
-            columns: ['id']
+            foreignKeyName: 'profiles_user_id_fkey'
+            columns: ['user_id']
             referencedRelation: 'users'
             referencedColumns: ['id']
           },
@@ -85,7 +91,22 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      vw_area_members: {
+        Row: {
+          area_id: string | null
+          is_admin: boolean | null
+          name: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'area_member_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
     }
     Functions: {
       create_area_and_admin: {

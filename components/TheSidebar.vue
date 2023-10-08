@@ -64,7 +64,7 @@ const linksToShow = computed(() => {
     ...links,
     ...userAreas.value.map(area => ({
       label: area.name,
-      to: `/area/${area.id}`,
+      to: `/area/${area.area_id}`,
       icon: 'i-heroicons-folder',
     })),
   ]

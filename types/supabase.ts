@@ -60,17 +60,17 @@ export interface Database {
       }
       profiles: {
         Row: {
-          name: string | null
+          name: string
           updated_at: string | null
           user_id: string
         }
         Insert: {
-          name?: string | null
+          name: string
           updated_at?: string | null
           user_id: string
         }
         Update: {
-          name?: string | null
+          name?: string
           updated_at?: string | null
           user_id?: string
         }

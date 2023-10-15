@@ -27,6 +27,14 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase', // https://supabase.nuxtjs.org/
     '@nuxt/ui', // https://ui.nuxt.com/
   ],
+  runtimeConfig: {
+    public: {
+      sentry: {
+        dsn: '',
+        environment: 'development',
+      },
+    },
+  },
   i18n: {
     vueI18n: './i18n.config.ts',
     defaultLocale: 'en',

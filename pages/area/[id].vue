@@ -24,18 +24,12 @@ watch(path, async (path) => {
 
 async function onClick(item: FileObject) {
   if (item.id) {
-    const { data, error } = await supabase.storage.from('documents').download(`${path.value}/${item.name}`)
-    if (error) {
+    const { data, error } = await supabase.storage.from('documents').createSignedUrl(`${path.value}/${item.name}`, 60, { download: true })
+    if (error)
       console.error(error)
-    }
-    else if (data) {
-      const a = document.createElement('a')
-      a.href = window.URL.createObjectURL(data)
-      a.download = item.name // Set the desired file name
 
-      // Programmatically click the <a> element to trigger the download
-      a.click()
-    }
+    else if (data)
+      window.open(data.signedUrl, '_blank')
   }
   else {
     const pathArray = path.value === '' ? [] : path.value.split('/')

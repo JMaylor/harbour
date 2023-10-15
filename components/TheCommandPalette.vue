@@ -15,9 +15,17 @@ defineShortcuts({
     usingInput: true,
     handler: toggleIsOpen,
   },
+  alt_n: {
+    usingInput: true,
+    handler: () => {
+      toggleIsOpen(false)
+      setTimeout(() => {
+        emit('newArea')
+      }, 250)
+    },
+  },
 })
 
-const { metaSymbol } = useShortcuts()
 const groups = computed(() => [
   {
     key: 'areas',
@@ -43,7 +51,7 @@ const groups = computed(() => [
             emit('newArea')
           }, 250)
         },
-        shortcuts: [metaSymbol.value, 'N'],
+        shortcuts: ['Alt', 'N'],
         iconClass: 'bg-primary',
       },
     ],

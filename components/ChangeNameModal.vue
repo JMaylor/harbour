@@ -40,7 +40,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UModal v-model="modelValue">
+  <UModal
+    v-model="modelValue"
+    :ui="{
+      width: 'sm:max-w-sm',
+    }"
+  >
     <UCard>
       <template #header>
         Change Name

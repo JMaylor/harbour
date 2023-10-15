@@ -49,7 +49,7 @@ const linksToShow = computed(() => {
 
 const bottomLinks = computed(() => [
   {
-    label: profile?.name,
+    label: profile?.name ?? '',
     icon: 'i-heroicons-user',
     click: () => isChangeNameModalOpen.value = true,
   },
